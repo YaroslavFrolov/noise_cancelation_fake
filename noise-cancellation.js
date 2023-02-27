@@ -57,7 +57,7 @@ class NoiseCancellationSimulator {
 
   async _initNoiseReducer() {
     await this.audioCtx.audioWorklet.addModule(
-      "/projects/noise-cancellation/noise-cancellation-processor.js"
+      "./noise-cancellation-processor.js"
     );
     this.noiseReducer = new AudioWorkletNode(
       this.audioCtx,
