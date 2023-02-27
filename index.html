@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .round-corners {
+        border-radius: 25px;
+        padding: 20px;
+      }
+
+      .button {
+        cursor: pointer;
+        background-color: orange;
+      }
+      .button:active {
+        transform: translateY(2px);
+      }
+      .button.play {
+        background-color: green;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <div class="round-corners" style="width: 800px; background: #ade9db">
+        <div>
+          Time Domain
+          <br />
+          <canvas
+            class="noise-cancellation-canvas"
+            width="800"
+            height="100"
+            style="background-color: whitesmoke"
+          ></canvas>
+          <br />
+        </div>
+        <br />
+        <br />
+        <table class="round-corners" style="width: 100%; background: #e1fff8">
+          <tbody>
+            <tr>
+              <td><b>Audio Source</b></td>
+              <td>Microphone</td>
+            </tr>
+
+            <tr>
+              <td><b>Anti-Wave Phase Shift</b></td>
+              <td>
+                <input
+                  type="range"
+                  min="0"
+                  max="180"
+                  step="1"
+                  value="0"
+                  oninput="noiseCancellationSimulator.antiWavePhase = this.value;"
+                  style="width: 500px"
+                />
+              </td>
+            </tr>
+
+            <tr>
+              <td><b>Anti-Wave Amplitude [0-100%]</b></td>
+              <td>
+                <input
+                  type="range"
+                  min="0"
+                  max="100"
+                  step="0.5"
+                  value="100"
+                  oninput="noiseCancellationSimulator.antiWaveAmplitude = this.value;"
+                  style="width: 500px"
+                />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <br />
+        <p>
+          <button id="btn" class="round-corners button" onclick="toggle()">
+            Play/Pause
+          </button>
+        </p>
+      </div>
+
+      <script src="/projects/noise-cancellation/noise-cancellation.js"></script>
+      <script>
+        var noiseCancellationSimulator;
+
+        function initApp() {
+          if (!noiseCancellationSimulator) {
+            noiseCancellationSimulator = new NoiseCancellationSimulator();
+          }
+        }
+
+        function toggle() {
+          initApp();
+
+          const isPlaying = noiseCancellationSimulator.toggle();
+
+          if (isPlaying) {
+            btn.classList.add("play");
+          } else {
+            btn.classList.remove("play");
+          }
+        }
+      </script>
+    </div>
+  </body>
+</html>
